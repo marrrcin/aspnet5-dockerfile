@@ -28,3 +28,19 @@ If you want to perform a quick fix inside of the running app, follow the steps:
 I've came accross the problem, where I've finally ran the application, but it has no styling. The issue was the naming of the _ViewStart.cshtml file. Solution?
 
 1. Rename `_ViewStart.cshtml` from ViewsFolder to `_viewstart.cshtml`
+
+## Command *k kestrel* not found in the container?
+This is another issue which effectively stopped me for a while when I tried to build the app. It was caused by missing command in *project.json*.
+
+1. Make sure your *commands* section in `project.json` looks like this:
+```
+"commands": {
+        "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5000",
+        "gen": "Microsoft.Framework.CodeGeneration",
+        "ef":  "EntityFramework.Commands",
+        
+        /* kestrel command is required when you run app on linux */
+        "kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:5004"
+        
+    },
+```
